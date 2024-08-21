@@ -1,0 +1,8 @@
+
+*.d
+*.o
+*.asm
+*.sym
+user/_*
+*.out
+*.S

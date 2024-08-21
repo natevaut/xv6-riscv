@@ -678,3 +678,39 @@ void procdump(void)
     printf("\n");
   }
 }
+
+// custom:
+void ps(void)
+{
+  struct proc *p;
+  char *state;
+
+  printf("pID\tsuperID\tState\tName\tSize\n");
+
+  for (p = proc; p < &proc[NPROC]; p++)
+  {
+    state = "OTHER";
+    switch (p->state)
+    {
+    case SLEEPING:
+      state = "SLEEPING";
+      break;
+    case RUNNABLE:
+      state = "RUNNABLE";
+      break;
+    case RUNNING:
+      state = "RUNNING";
+      break;
+    case ZOMBIE:
+      state = "ZOMBIE";
+      break;
+    case UNUSED:
+      state = "UNUSED";
+      break;
+    case USED:
+      state = "USED";
+      break;
+    }
+    printf("%d\t%d\t%s\t%s\t%d\n", p->pid, p->parent ? p->parent->pid : 0, state, p->name, p->sz);
+  }
+}

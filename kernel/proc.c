@@ -706,7 +706,7 @@ void ps(void)
       break;
     case UNUSED:
       state = "UNUSED";
-      break;
+      continue;
     case USED:
       state = "USED";
       break;

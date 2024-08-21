@@ -3,3 +3,6 @@
 *.o
 *.asm
 *.sym
+*.out
+*.S
+user/_*

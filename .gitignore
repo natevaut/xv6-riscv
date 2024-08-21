@@ -6,3 +6,7 @@
 *.out
 *.S
 user/_*
+user/initcode
+mkfs/mkfs
+kernel/kernel
+fs.img

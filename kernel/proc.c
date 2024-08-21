@@ -685,7 +685,7 @@ void ps(void)
   struct proc *p;
   char *state;
 
-  printf("pID\tsuperID\tState\tName\tSize\n");
+  printf("p.ID\tstate\tname\tsize\n");
 
   for (p = proc; p < &proc[NPROC]; p++)
   {
@@ -711,6 +711,6 @@ void ps(void)
       state = "USED";
       break;
     }
-    printf("%d\t%d\t%s\t%s\t%d\n", p->pid, p->parent ? p->parent->pid : 0, state, p->name, p->sz);
+    printf("%d(%d)\t%s\t%s\t%d\n", p->pid, p->parent ? p->parent->pid : 0, state, p->name, p->sz);
   }
 }

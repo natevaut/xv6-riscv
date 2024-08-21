@@ -43,3 +43,4 @@ void *memcpy(void *, const void *, uint);
 
 // custom:
 int ps(void);
+int ps2(void);

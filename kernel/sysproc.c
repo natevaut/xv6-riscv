@@ -105,3 +105,11 @@ sys_ps(void)
   ps();
   return 0;
 }
+
+uint64
+sys_ps2(void)
+{
+
+  ps2();
+  return 0;
+}

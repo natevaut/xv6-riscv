@@ -22,3 +22,4 @@
 #define SYS_close 21
 // custom:
 #define SYS_ps 22
+#define SYS_ps2 23

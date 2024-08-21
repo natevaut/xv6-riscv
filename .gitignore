@@ -3,8 +3,7 @@
 *.o
 *.asm
 *.sym
-*.out
-*.S
+
 user/_*
 user/initcode
 mkfs/mkfs

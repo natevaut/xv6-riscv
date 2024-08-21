@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     // only argument available is -r, so anything else fails
     else
     {
-      printf("Wrong command option.");
+      printf("Wrong command option.\n");
     }
   }
 

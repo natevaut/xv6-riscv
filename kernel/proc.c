@@ -711,7 +711,28 @@ void ps(void)
       break;
     }
     n++;
-    printf("%d %d %s %s %d\n", p->pid, p->parent ? p->parent->pid : 0, state, p->name, p->sz);
+
+    int parentid = 0;
+    if (p->parent)
+      parentid = p->parent->pid;
+    printf("%d %d %s %s %d\n", p->pid, parentid, state, p->name, p->sz);
   }
   printf("There are a total of %d processed in the system.\n", n);
+}
+
+void ps2(void)
+{
+  struct proc *p;
+
+  for (p = proc; p < &proc[NPROC]; p++)
+  {
+    // only checking 'running'
+    if (p->state != RUNNING)
+      continue;
+
+    int parentid = 0;
+    if (p->parent)
+      parentid = p->parent->pid;
+    printf("%d %d %s %s %d\n", p->pid, parentid, "running", p->name, p->sz);
+  }
 }

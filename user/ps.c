@@ -10,9 +10,22 @@
 
 int main(int argc, char *argv[])
 {
-  printf("Hello from my test case in xv6\n");
-
-  ps();
+  if (argc == 1)
+  {
+    ps();
+  }
+  else
+  {
+    char arg = argv[1][1]; // char[1] of first arg after the cmd name (e.g. ps -r -> r)
+    if (arg == 'r')
+    {
+      ps2();
+    }
+    else
+    {
+      printf("Wrong command option.");
+    }
+  }
 
   exit(0);
 }

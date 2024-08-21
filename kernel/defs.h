@@ -187,3 +187,4 @@ void virtio_disk_intr(void);
 
 // custom:
 void ps(void);
+void ps2(void);

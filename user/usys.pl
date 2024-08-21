@@ -39,3 +39,4 @@ entry("uptime");
 
 # custom:
 entry("ps");
+entry("ps2");

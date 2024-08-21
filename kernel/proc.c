@@ -687,8 +687,10 @@ void ps(void)
 
   int n = 0;
 
+  // loop through active processes
   for (p = proc; p < &proc[NPROC]; p++)
   {
+    // change state enum to a readable string
     state = "other";
     switch (p->state)
     {
@@ -712,9 +714,12 @@ void ps(void)
     }
     n++;
 
+    // get parent id or 0 if not set
     int parentid = 0;
     if (p->parent)
       parentid = p->parent->pid;
+
+    // print process info
     printf("%d %d %s %s %d\n", p->pid, parentid, state, p->name, p->sz);
   }
   printf("There are a total of %d processes in the system.\n", n);
@@ -724,15 +729,19 @@ void ps2(void)
 {
   struct proc *p;
 
+  // loop through active processes
   for (p = proc; p < &proc[NPROC]; p++)
   {
-    // only checking 'running'
+    // only checking 'running': anything else is ignored
     if (p->state != RUNNING)
       continue;
 
+    // get parent id or 0 if not set
     int parentid = 0;
     if (p->parent)
       parentid = p->parent->pid;
+
+    // print process info
     printf("%d %d %s %s %d\n", p->pid, parentid, "running", p->name, p->sz);
   }
 }

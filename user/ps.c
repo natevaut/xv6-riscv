@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
   }
   else
   {
-    char arg = argv[1][1]; // char[1] of first arg after the cmd name (e.g. ps -r -> r)
+    char arg = argv[1][1]; // char[1] of first arg after the cmd name : `ps -r` -> 'r'
     if (arg == 'r')
     {
       ps2();

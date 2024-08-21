@@ -717,7 +717,7 @@ void ps(void)
       parentid = p->parent->pid;
     printf("%d %d %s %s %d\n", p->pid, parentid, state, p->name, p->sz);
   }
-  printf("There are a total of %d processed in the system.\n", n);
+  printf("There are a total of %d processes in the system.\n", n);
 }
 
 void ps2(void)
@@ -735,5 +735,4 @@ void ps2(void)
       parentid = p->parent->pid;
     printf("%d %d %s %s %d\n", p->pid, parentid, "running", p->name, p->sz);
   }
-  printf("There are a total of %d processed in the system.\n", n);
 }

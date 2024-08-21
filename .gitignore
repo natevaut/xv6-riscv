@@ -3,6 +3,8 @@
 *.o
 *.asm
 *.sym
+*.S
+*.out
 
 user/_*
 user/initcode

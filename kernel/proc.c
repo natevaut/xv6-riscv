@@ -685,32 +685,33 @@ void ps(void)
   struct proc *p;
   char *state;
 
-  printf("p.ID\tstate\tname\tsize\n");
+  int n = 0;
 
   for (p = proc; p < &proc[NPROC]; p++)
   {
-    state = "OTHER";
+    state = "other";
     switch (p->state)
     {
     case SLEEPING:
-      state = "SLEEPING";
+      state = "sleep";
       break;
     case RUNNABLE:
-      state = "RUNNABLE";
+      state = "runnable";
       break;
     case RUNNING:
-      state = "RUNNING";
+      state = "running";
       break;
     case ZOMBIE:
-      state = "ZOMBIE";
+      state = "zombie";
       break;
     case UNUSED:
-      state = "UNUSED";
       continue;
     case USED:
-      state = "USED";
+      state = "used";
       break;
     }
-    printf("%d(%d)\t%s\t%s\t%d\n", p->pid, p->parent ? p->parent->pid : 0, state, p->name, p->sz);
+    n++;
+    printf("%d %d %s %s %d\n", p->pid, p->parent ? p->parent->pid : 0, state, p->name, p->sz);
   }
+  printf("There are a total of %d processed in the system.\n", n);
 }

@@ -114,9 +114,10 @@ sys_ps2(void)
   return 0;
 }
 
+#define PTE_A (1L << 6) // bit 6
+
 int sys_pageAccess(void)
 {
-  // Get the three function arguments from the pageAccess() system call
   uint64 usrpage_ptr; // First argument - pointer to user space address
   int npages;         // Second argument - the number of pages to examine
   uint64 useraddr;    // Third argument - pointer to the bitmap
@@ -124,10 +125,24 @@ int sys_pageAccess(void)
   argint(1, &npages);
   argaddr(2, &useraddr);
 
+  if (npages > 64 || npages <= 0)
+    return -1;
+
   struct proc *p = myproc();
 
-  // . . . Add your code for this function here . . .
-  int bitmap; // TEMP
+  unsigned int bitmap = 0;
+
+  for (int i = 0; i < npages; i++)
+  {
+    uint64 va = usrpage_ptr + i * PGSIZE; // virtual addr
+
+    pte_t *pte = walk(p->pagetable, va, 0);
+    if (pte == NULL)
+      continue; // continue if no pte
+
+    if (*pte & PTE_A)
+      bitmap |= (1 << i); // Set bit in bitmap
+  }
 
   // Return the bitmap pointer to the user program
   copyout(p->pagetable, useraddr, (char *)&bitmap, sizeof(bitmap));

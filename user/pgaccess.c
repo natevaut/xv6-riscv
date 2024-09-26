@@ -42,7 +42,7 @@ int main()
     }
     else
     {
-        printf("pageAccess is working correctly\n")
+        printf("pageAccess is working correctly\n");
     }
     free(buf);
     exit(0);

@@ -113,3 +113,23 @@ sys_ps2(void)
   ps2();
   return 0;
 }
+
+int sys_pageAccess(void)
+{
+  // Get the three function arguments from the pageAccess() system call
+  uint64 usrpage_ptr; // First argument - pointer to user space address
+  int npages;         // Second argument - the number of pages to examine
+  uint64 useraddr;    // Third argument - pointer to the bitmap
+  argaddr(0, &usrpage_ptr);
+  argint(1, &npages);
+  argaddr(2, &useraddr);
+
+  struct proc *p = myproc();
+
+  // . . . Add your code for this function here . . .
+  int bitmap; // TEMP
+
+  // Return the bitmap pointer to the user program
+  copyout(p->pagetable, useraddr, (char *)&bitmap, sizeof(bitmap));
+  return 0;
+}

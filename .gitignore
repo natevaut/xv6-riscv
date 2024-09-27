@@ -11,3 +11,4 @@ user/initcode
 mkfs/mkfs
 kernel/kernel
 fs.img
+/.vscode

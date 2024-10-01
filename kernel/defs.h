@@ -191,3 +191,6 @@ void virtio_disk_intr(void);
 // custom:
 void ps(void);
 void ps2(void);
+int pageAccess(char *buf, unsigned int npages, unsigned int *btmp);
+
+#define NULL 0

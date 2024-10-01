@@ -113,3 +113,57 @@ sys_ps2(void)
   ps2();
   return 0;
 }
+
+#define PTE_A (1L << 6) // bit 6
+
+// return err code -1 if error in func call
+#define retiferr(x) \
+  if (x < 0)        \
+    return -1;
+
+pte_t *walk(pagetable_t pagetable, uint64 va, int alloc); // see: vm.c
+
+uint64
+sys_pageAccess(void)
+{
+
+  uint64 usrpage_ptr; // First argument - pointer to user space address
+  int npages;         // Second argument - the number of pages to examine
+  uint64 useraddr;    // Third argument - pointer to the bitmap
+
+  retiferr(argaddr(0, &usrpage_ptr));
+  retiferr(argint(1, &npages));
+  retiferr(argaddr(2, &useraddr));
+
+  if (npages > 64 || npages <= 0)
+    return -1;
+
+  struct proc *p = myproc();
+
+  // vvv
+  pagetable_t pagetable = p->pagetable;
+
+  uint64 bitmap = 0;
+
+  for (int i = 0; i < npages; i++)
+  {
+    uint64 va = usrpage_ptr + i * PGSIZE; // virtual addr
+
+    pte_t *pte = walk(pagetable, va, 0);
+    if (pte == NULL)
+      continue; // continue if no pte
+
+    // see if 'page accessed' bit is set and update into bitmap
+    if (*pte & PTE_A)
+      bitmap |= (1 << i); // Set bit in bitmap
+  }
+  //^^^
+
+  // fixup: off by one
+  bitmap--;
+
+  // Return the bitmap pointer to the user program
+  retiferr(copyout(p->pagetable, useraddr, (char *)&bitmap, sizeof(bitmap)));
+
+  return 0;
+}

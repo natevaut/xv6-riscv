@@ -23,3 +23,4 @@
 // custom:
 #define SYS_ps 22
 #define SYS_ps2 23
+#define SYS_pageAccess 24

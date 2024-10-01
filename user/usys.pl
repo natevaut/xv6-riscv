@@ -40,3 +40,4 @@ entry("uptime");
 # custom:
 entry("ps");
 entry("ps2");
+entry("pageAccess")

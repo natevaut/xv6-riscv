@@ -132,21 +132,20 @@ sys_pageAccess(void)
   struct proc *p = myproc();
 
   // vvv
+  pagetable_t pagetable = p->pagetable;
+
   unsigned int bitmap = 0;
 
   for (int i = 0; i < npages; i++)
   {
-    /*
     uint64 va = usrpage_ptr + i * PGSIZE; // virtual addr
 
-    pte_t *pte;
-    pte = walk(p->pagetable, va, 0);
-    if (pte == NULL)
+    pte_t pte = walkaddr(pagetable, va);
+    if (pte == 0)
       continue; // continue if no pte
 
-    if (*pte & PTE_A)
+    if (pte & PTE_A)
       bitmap |= (1 << i); // Set bit in bitmap
-    //*/
   }
   //^^^
 

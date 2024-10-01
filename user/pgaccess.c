@@ -4,8 +4,7 @@
 #include "kernel/types.h"
 #include "kernel/stat.h"
 #include "user/user.h" // prototype of pageAccess() system call should be defined here
-
-#define PGSIZE 64 // TEMP
+#include "kernel/riscv.h"
 
 int main()
 {

@@ -44,4 +44,4 @@ void *memcpy(void *, const void *, uint);
 // custom:
 int ps(void);
 int ps2(void);
-int pageAccess(void);
+int pageAccess(char *buf, unsigned int npages, unsigned int *btmp);

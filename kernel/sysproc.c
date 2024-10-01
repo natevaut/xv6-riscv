@@ -159,6 +159,9 @@ sys_pageAccess(void)
   }
   //^^^
 
+  // fixup: off by one
+  bitmap--;
+
   // Return the bitmap pointer to the user program
   retiferr(copyout(p->pagetable, useraddr, (char *)&bitmap, sizeof(bitmap)));
 

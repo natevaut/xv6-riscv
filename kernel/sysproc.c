@@ -121,6 +121,8 @@ sys_ps2(void)
   if (x < 0)        \
     return -1;
 
+pte_t *walk(pagetable_t pagetable, uint64 va, int alloc); // see: vm.c
+
 uint64
 sys_pageAccess(void)
 {
@@ -141,17 +143,18 @@ sys_pageAccess(void)
   // vvv
   pagetable_t pagetable = p->pagetable;
 
-  unsigned int bitmap = 0;
+  uint64 bitmap = 0;
 
   for (int i = 0; i < npages; i++)
   {
     uint64 va = usrpage_ptr + i * PGSIZE; // virtual addr
 
-    pte_t pte = walkaddr(pagetable, va);
-    if (pte == 0)
+    pte_t *pte = walk(pagetable, va, 0);
+    if (pte == NULL)
       continue; // continue if no pte
 
-    if (pte & PTE_A)
+    // see if 'page accessed' bit is set and update into bitmap
+    if (*pte & PTE_A)
       bitmap |= (1 << i); // Set bit in bitmap
   }
   //^^^

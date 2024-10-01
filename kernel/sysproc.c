@@ -116,15 +116,22 @@ sys_ps2(void)
 
 #define PTE_A (1L << 6) // bit 6
 
+// return err code -1 if error in func call
+#define retiferr(x) \
+  if (x < 0)        \
+    return -1;
+
 uint64
 sys_pageAccess(void)
 {
+
   uint64 usrpage_ptr; // First argument - pointer to user space address
   int npages;         // Second argument - the number of pages to examine
   uint64 useraddr;    // Third argument - pointer to the bitmap
-  argaddr(0, &usrpage_ptr);
-  argint(1, &npages);
-  argaddr(2, &useraddr);
+
+  retiferr(argaddr(0, &usrpage_ptr));
+  retiferr(argint(1, &npages));
+  retiferr(argaddr(2, &useraddr));
 
   if (npages > 64 || npages <= 0)
     return -1;
@@ -150,7 +157,7 @@ sys_pageAccess(void)
   //^^^
 
   // Return the bitmap pointer to the user program
-  copyout(p->pagetable, useraddr, (char *)&bitmap, sizeof(bitmap));
+  retiferr(copyout(p->pagetable, useraddr, (char *)&bitmap, sizeof(bitmap)));
 
   return 0;
 }

@@ -745,3 +745,9 @@ void ps2(void)
     printf("%d %d %s %s %d\n", p->pid, parentid, "running", p->name, p->sz);
   }
 }
+
+int pageAccess(char *buf, unsigned int npages, unsigned int *btmp)
+{
+  printf("sys_pageAccess()");
+  return 0;
+}

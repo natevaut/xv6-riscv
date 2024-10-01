@@ -116,7 +116,8 @@ sys_ps2(void)
 
 #define PTE_A (1L << 6) // bit 6
 
-int sys_pageAccess(void)
+uint64
+sys_pageAccess(void)
 {
   uint64 usrpage_ptr; // First argument - pointer to user space address
   int npages;         // Second argument - the number of pages to examine
@@ -151,5 +152,6 @@ int sys_pageAccess(void)
 
   // Return the bitmap pointer to the user program
   copyout(p->pagetable, useraddr, (char *)&bitmap, sizeof(bitmap));
+
   return 0;
 }

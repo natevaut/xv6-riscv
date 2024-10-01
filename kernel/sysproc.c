@@ -130,19 +130,24 @@ int sys_pageAccess(void)
 
   struct proc *p = myproc();
 
+  // vvv
   unsigned int bitmap = 0;
 
   for (int i = 0; i < npages; i++)
   {
+    /*
     uint64 va = usrpage_ptr + i * PGSIZE; // virtual addr
 
-    pte_t *pte = walk(p->pagetable, va, 0);
+    pte_t *pte;
+    pte = walk(p->pagetable, va, 0);
     if (pte == NULL)
       continue; // continue if no pte
 
     if (*pte & PTE_A)
       bitmap |= (1 << i); // Set bit in bitmap
+    //*/
   }
+  //^^^
 
   // Return the bitmap pointer to the user program
   copyout(p->pagetable, useraddr, (char *)&bitmap, sizeof(bitmap));

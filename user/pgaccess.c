@@ -24,8 +24,9 @@ int main()
     // Read and write to several different pages here
     // Change the page numbers and the number of pages to thoroughly test the system call
     buf[PGSIZE * 1] += 1;
-    buf[PGSIZE * 2] += 1;
-    buf[PGSIZE * 30] += 1;
+    buf[PGSIZE * 2] += 5;
+    buf[PGSIZE * 5] += 1;
+    buf[PGSIZE * 20] += 1;
 
     // Let pageAccess check the pages accessed in buf
     if (pageAccess(buf, 32, &abits) < 0)
@@ -35,7 +36,7 @@ int main()
         exit(1);
     }
 
-    if (abits != ((1 << 1) | (1 << 2) | (1 << 30)))
+    if (abits != ((1 << 1) | (1 << 2) | (1 << 5) | (1 << 20)))
     {
         printf("Incorrect access bits set\n");
     }

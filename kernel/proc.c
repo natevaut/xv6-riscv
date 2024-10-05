@@ -132,6 +132,8 @@ found:
   p->wait_time = 0;
   p->sleep_time = 0;
   p->exit_time = 0;
+  // assign2
+  p->nice = DEFAULT_NICE;
 
   // Allocate a trapframe page.
   if ((p->trapframe = (struct trapframe *)kalloc()) == 0)
@@ -879,4 +881,41 @@ void update_timings(void)
 
     release(&p->lock);
   }
+}
+
+// assign2
+int setnice(int pid, int n)
+{
+  struct proc *p;
+
+  if (n < LEAST_NICE || n > MOST_NICE)
+    return -1;
+
+  for (p = proc; p < &proc[NPROC]; p++)
+  {
+    if (p->pid == pid)
+    {
+      int oldnice;
+      oldnice = p->nice;
+      p->nice = n;
+      return oldnice;
+    }
+  }
+
+  return -404;
+}
+int getnice(int pid)
+{
+  struct proc *p;
+
+  for (p = proc; p < &proc[NPROC]; p++)
+  {
+    if (p->pid == pid)
+    {
+      int nice = p->nice;
+      return nice;
+    }
+  }
+
+  return -404;
 }

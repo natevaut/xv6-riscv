@@ -496,9 +496,9 @@ int wait2(uint64 addr, uint *runtime, uint *waittime, uint *sleeptime)
 
           // lab7
           // set time vars
-          *runtime = p->run_time;
-          *waittime = p->wait_time;
-          *sleeptime = p->sleep_time;
+          *runtime = np->run_time;
+          *waittime = np->wait_time;
+          *sleeptime = np->sleep_time;
 
           return pid;
         }

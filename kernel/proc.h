@@ -112,4 +112,13 @@ struct proc {
   uint64 wait_time;
   uint64 sleep_time;
   uint64 exit_time;
+
+  // assign2
+  uint8 nice;
 };
+// assign2
+#define MOST_NICE 20
+#define LEAST_NICE 0
+#define DEFAULT_NICE 10
+int setnice(int pid, int n);
+int getnice(int pid);

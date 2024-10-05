@@ -44,3 +44,7 @@ entry("pageAccess");
 
 # lab7
 entry("wait2");
+
+# assign2
+entry("setnice");
+entry("getnice");

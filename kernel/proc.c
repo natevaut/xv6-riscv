@@ -132,6 +132,8 @@ found:
   p->wait_time = 0;
   p->sleep_time = 0;
   p->exit_time = 0;
+  // assign2
+  p->nice = DEFAULT_NICE;
 
   // Allocate a trapframe page.
   if ((p->trapframe = (struct trapframe *)kalloc()) == 0)
@@ -494,9 +496,9 @@ int wait2(uint64 addr, uint *runtime, uint *waittime, uint *sleeptime)
 
           // lab7
           // set time vars
-          *runtime = p->run_time;
-          *waittime = p->wait_time;
-          *sleeptime = p->sleep_time;
+          *runtime = np->run_time;
+          *waittime = np->wait_time;
+          *sleeptime = np->sleep_time;
 
           return pid;
         }
@@ -585,6 +587,35 @@ void scheduler(void)
     }
 
 #endif // FCFS
+#ifdef SCHEDULER
+    struct proc *highestproc = 0;
+
+    for (p = proc; p < &proc[NPROC]; p++)
+    { // Go through all PCBs
+      acquire(&p->lock);
+      if (p->state == RUNNABLE)
+      { // If process is RUNNABLE
+        if (!highestproc || p->nice < highestproc->nice)
+        { // Either haven't found one, or this process is nicer
+          if (highestproc)
+            release(&highestproc->lock); // Release the previously found process
+          highestproc = p;               // Set this process as the highest priority
+          continue;
+        }
+      }
+      release(&p->lock);
+    }
+    if (highestproc)
+    { // Make this the RUNNING process
+      highestproc->state = RUNNING;
+
+      c->proc = highestproc;
+      swtch(&c->context, &highestproc->context);
+
+      c->proc = 0;
+      release(&highestproc->lock);
+    }
+#endif // SCHEDULER
   }
 }
 
@@ -879,4 +910,41 @@ void update_timings(void)
 
     release(&p->lock);
   }
+}
+
+// assign2
+int setnice(int pid, int n)
+{
+  struct proc *p;
+
+  if (n < LEAST_NICE || n > MOST_NICE)
+    return -1;
+
+  for (p = proc; p < &proc[NPROC]; p++)
+  {
+    if (p->pid == pid)
+    {
+      int oldnice;
+      oldnice = p->nice;
+      p->nice = n;
+      return oldnice;
+    }
+  }
+
+  return -404;
+}
+int getnice(int pid)
+{
+  struct proc *p;
+
+  for (p = proc; p < &proc[NPROC]; p++)
+  {
+    if (p->pid == pid)
+    {
+      int nice = p->nice;
+      return nice;
+    }
+  }
+
+  return -404;
 }

@@ -141,6 +141,7 @@ UPROGS=\
 	$U/_ps\
 	$U/_pgaccess\
 	$U/_schedtest\
+	$U/_schedtest2\
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)

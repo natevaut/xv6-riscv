@@ -105,4 +105,11 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+
+  // lab7
+  uint64 create_time;
+  uint64 run_time;
+  uint64 wait_time;
+  uint64 sleep_time;
+  uint64 exit_time;
 };

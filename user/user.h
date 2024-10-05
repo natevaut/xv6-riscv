@@ -41,6 +41,9 @@ int atoi(const char *);
 int memcmp(const void *, const void *, uint);
 void *memcpy(void *, const void *, uint);
 
+// lab7
+int wait2(int *addr, int *, int *, int *);
+
 // custom:
 int ps(void);
 int ps2(void);

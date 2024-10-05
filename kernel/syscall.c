@@ -98,6 +98,7 @@ extern uint64 sys_sbrk(void);
 extern uint64 sys_sleep(void);
 extern uint64 sys_unlink(void);
 extern uint64 sys_wait(void);
+extern uint64 sys_wait2(void);
 extern uint64 sys_write(void);
 extern uint64 sys_uptime(void);
 extern uint64 sys_ps(void);
@@ -130,6 +131,8 @@ static uint64 (*syscalls[])(void) = {
     [SYS_ps] sys_ps,
     [SYS_ps2] sys_ps2,
     [SYS_pageAccess] sys_pageAccess,
+    // lab7
+    [SYS_wait2] sys_wait2,
 };
 
 void syscall(void)

@@ -48,3 +48,6 @@ int wait2(int *addr, int *, int *, int *);
 int ps(void);
 int ps2(void);
 int pageAccess(char *buf, unsigned int npages, unsigned int *btmp);
+
+int getnice(int pid);
+int setnice(int pid, int nice);

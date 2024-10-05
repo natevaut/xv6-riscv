@@ -192,3 +192,25 @@ sys_pageAccess(void)
 
   return 0;
 }
+
+uint64 sys_getnice(void)
+{
+  int pid;
+
+  if (argint(0, &pid) < 0)
+    return -1;
+
+  return getnice(pid);
+}
+
+uint64 sys_setnice(void)
+{
+  int pid, nice;
+
+  if (argint(0, &pid) < 0 || argint(0, &nice))
+    return -1;
+
+  setnice(pid, nice);
+
+  return 0;
+}

@@ -104,6 +104,8 @@ extern uint64 sys_uptime(void);
 extern uint64 sys_ps(void);
 extern uint64 sys_ps2(void);
 extern uint64 sys_pageAccess(void);
+extern uint64 sys_getnice(void);
+extern uint64 sys_setnice(void);
 
 static uint64 (*syscalls[])(void) = {
     [SYS_fork] sys_fork,
@@ -133,6 +135,9 @@ static uint64 (*syscalls[])(void) = {
     [SYS_pageAccess] sys_pageAccess,
     // lab7
     [SYS_wait2] sys_wait2,
+    // assign2
+    [SYS_getnice] sys_getnice,
+    [SYS_setnice] sys_setnice,
 };
 
 void syscall(void)

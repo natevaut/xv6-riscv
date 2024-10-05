@@ -27,3 +27,6 @@
 // lab7
 #define SYS_wait2 25
 #define SYS_schedtest 26
+// assign2
+#define SYS_getnice 27
+#define SYS_setnice 28

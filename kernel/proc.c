@@ -126,6 +126,13 @@ found:
   p->pid = allocpid();
   p->state = USED;
 
+  // lab7
+  p->create_time = ticks; // uint ticks : from trap.c
+  p->run_time = 0;
+  p->wait_time = 0;
+  p->sleep_time = 0;
+  p->exit_time = 0;
+
   // Allocate a trapframe page.
   if ((p->trapframe = (struct trapframe *)kalloc()) == 0)
   {
@@ -384,6 +391,9 @@ void exit(int status)
   p->xstate = status;
   p->state = ZOMBIE;
 
+  // lab7
+  p->exit_time = ticks; // uint ticks : from trap.c
+
   release(&wait_lock);
 
   // Jump into the scheduler, never to return.
@@ -427,6 +437,67 @@ int wait(uint64 addr)
           freeproc(np);
           release(&np->lock);
           release(&wait_lock);
+          return pid;
+        }
+        release(&np->lock);
+      }
+    }
+
+    // No point waiting if we don't have any children.
+    if (!havekids || p->killed)
+    {
+      release(&wait_lock);
+      return -1;
+    }
+
+    // Wait for a child to exit.
+    sleep(p, &wait_lock); // DOC: wait-sleep
+  }
+}
+
+// Wait for a child process to exit and return its pid.
+// Return -1 if this process has no children.
+int wait2(uint64 addr, uint *runtime, uint *waittime, uint *sleeptime)
+{
+  struct proc *np;
+  int havekids, pid;
+  struct proc *p = myproc();
+
+  acquire(&wait_lock);
+
+  for (;;)
+  {
+    // Scan through table looking for exited children.
+    havekids = 0;
+    for (np = proc; np < &proc[NPROC]; np++)
+    {
+      if (np->parent == p)
+      {
+        // make sure the child isn't still in exit() or swtch().
+        acquire(&np->lock);
+
+        havekids = 1;
+        if (np->state == ZOMBIE)
+        {
+          // Found one.
+          pid = np->pid;
+          if (addr != 0 && copyout(p->pagetable, addr, (char *)&np->xstate,
+                                   sizeof(np->xstate)) < 0)
+          {
+            release(&np->lock);
+            release(&wait_lock);
+            return -1;
+          }
+          freeproc(np);
+          release(&np->lock);
+          release(&wait_lock);
+
+          // lab7
+          // set time vars
+          *runtime = p->run_time;
+          *waittime = p->wait_time;
+          *sleeptime = p->sleep_time;
+
           return pid;
         }
         release(&np->lock);
@@ -750,4 +821,29 @@ int pageAccess(char *buf, unsigned int npages, unsigned int *btmp)
 {
   printf("sys_pageAccess()");
   return 0;
+}
+
+// lab7
+void update_timings(void)
+{
+  struct proc *p;
+  for (p = proc; p < &proc[NPROC]; p++)
+  {
+    acquire(&p->lock);
+
+    if (p->state == RUNNING)
+    {
+      p->run_time += 1;
+    }
+    else if (p->state == RUNNABLE)
+    {
+      p->wait_time += 1;
+    }
+    else if (p->state == SLEEPING)
+    {
+      p->sleep_time += 1;
+    }
+
+    release(&p->lock);
+  }
 }

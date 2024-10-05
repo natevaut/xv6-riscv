@@ -24,3 +24,6 @@
 #define SYS_ps 22
 #define SYS_ps2 23
 #define SYS_pageAccess 24
+// lab7
+#define SYS_wait2 25
+#define SYS_schedtest 26

@@ -173,6 +173,9 @@ int copyinstr(pagetable_t, char *, uint64, uint64);
 
 // lab:
 void ptableprint(pagetable_t);
+// lab7
+void update_timings(void);
+int wait2(uint64, uint *, uint *, uint *);
 
 // plic.c
 void plicinit(void);

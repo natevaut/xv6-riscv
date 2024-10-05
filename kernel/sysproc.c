@@ -38,6 +38,31 @@ sys_wait(void)
   return wait(p);
 }
 
+// lab7
+uint64
+sys_wait2(void)
+{
+  uint64 addr, addr1, addr2, addr3;
+  uint wtime, rtime, stime;
+  if (argaddr(0, &addr) < 0)
+    return -1;
+  if (argaddr(1, &addr1) < 0) // user virtual memory
+    return -1;
+  if (argaddr(2, &addr2) < 0)
+    return -1;
+  if (argaddr(3, &addr3) < 0)
+    return -1;
+  int ret = wait2(addr, &rtime, &wtime, &stime);
+  struct proc *p = myproc();
+  if (copyout(p->pagetable, addr1, (char *)&rtime, sizeof(int)) < 0)
+    return -1;
+  if (copyout(p->pagetable, addr2, (char *)&wtime, sizeof(int)) < 0)
+    return -1;
+  if (copyout(p->pagetable, addr3, (char *)&stime, sizeof(int)) < 0)
+    return -1;
+  return ret;
+}
+
 uint64
 sys_sbrk(void)
 {

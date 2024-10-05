@@ -40,4 +40,7 @@ entry("uptime");
 # custom:
 entry("ps");
 entry("ps2");
-entry("pageAccess")
+entry("pageAccess");
+
+# lab7
+entry("wait2");

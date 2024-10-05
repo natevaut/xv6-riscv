@@ -587,6 +587,35 @@ void scheduler(void)
     }
 
 #endif // FCFS
+#ifdef SCHEDULER
+    struct proc *highestproc = 0;
+
+    for (p = proc; p < &proc[NPROC]; p++)
+    { // Go through all PCBs
+      acquire(&p->lock);
+      if (p->state == RUNNABLE)
+      { // If process is RUNNABLE
+        if (!highestproc || p->nice < highestproc->nice)
+        { // Either haven't found one, or this process is nicer
+          if (highestproc)
+            release(&highestproc->lock); // Release the previously found process
+          highestproc = p;               // Set this process as the highest priority
+          continue;
+        }
+      }
+      release(&p->lock);
+    }
+    if (highestproc)
+    { // Make this the RUNNING process
+      highestproc->state = RUNNING;
+
+      c->proc = highestproc;
+      swtch(&c->context, &highestproc->context);
+
+      c->proc = 0;
+      release(&highestproc->lock);
+    }
+#endif // SCHEDULER
   }
 }
 

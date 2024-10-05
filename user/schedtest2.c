@@ -9,6 +9,7 @@
 int main()
 {
     int n, pid;
+    int org, new;
     int wtime, rtime, stime;
     int twtime = 0, trtime = 0, tstime = 0;
     for (n = 0; n < NFORK; n++)
@@ -30,6 +31,15 @@ int main()
                 }
             }
             exit(0);
+        }
+        else
+        {
+            if (n < IO)
+            {
+                org = setnice(pid, 18); // Set lower priority for IO bound processes
+                new = getnice(pid);
+                printf("Process %d original nice is %d, now changed to %d\n", pid, org, new);
+            }
         }
     }
     for (; n > 0; n--)

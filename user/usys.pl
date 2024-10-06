@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w
+# Register system calls for use in user programs
 
 # Generate usys.S, the stubs for syscalls.
 

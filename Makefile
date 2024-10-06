@@ -121,6 +121,7 @@ mkfs/mkfs: mkfs/mkfs.c $K/fs.h $K/param.h
 # http://www.gnu.org/software/make/manual/html_node/Chained-Rules.html
 .PRECIOUS: %.o
 
+# make user programs accessible from xv6 cli here:
 UPROGS=\
 	$U/_cat\
 	$U/_echo\
@@ -142,6 +143,7 @@ UPROGS=\
 	$U/_pgaccess\
 	$U/_schedtest\
 	$U/_schedtest2\
+	$U/_pingpong\
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)

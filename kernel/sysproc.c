@@ -207,7 +207,7 @@ uint64 sys_setnice(void)
 {
   int pid, nice;
 
-  if (argint(0, &pid) < 0 || argint(0, &nice))
+  if (argint(0, &pid) < 0 || argint(1, &nice))
     return -1;
 
   setnice(pid, nice);

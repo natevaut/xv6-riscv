@@ -1019,8 +1019,11 @@ void upwritesema(struct rwsemaphore *rws)
   upsema(&(rws->writesema)); // unlock write
 }
 
+// fd - file descriptor
+// offset - file offset in bytes; always computed from the beginning of the file
+// returns the resulting offset location in bytes on success else -1
 int lseek(int fd, int offset)
 {
 
-  return 0;
+  return -1;
 }

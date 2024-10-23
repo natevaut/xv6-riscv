@@ -280,5 +280,7 @@ sys_lseek(void)
   argaddr(0, &fd);
   argaddr(1, &offset);
 
-  return 0;
+  int ret;
+  ret = lseek(fd, offset);
+  return (uint64)ret;
 }

@@ -214,3 +214,61 @@ uint64 sys_setnice(void)
 
   return 0;
 }
+
+// assign3
+
+uint64 sys_sematest(void)
+{
+  static struct semaphore lk;
+  int cmd;
+
+  int ret = 0;
+
+  if (argint(0, &cmd) < 0)
+    return -1;
+
+  switch (cmd)
+  {
+  case 0:
+    initsema(&lk, 5);
+    ret = 5;
+    break;
+  case 1:
+    ret = downsema(&lk);
+    break;
+  case 2:
+    ret = upsema(&lk);
+    break;
+  }
+  return ret;
+}
+
+uint64
+sys_rwsematest(void)
+{
+  static struct rwsemaphore lk;
+  int cmd, ret = 0;
+
+  if (argint(0, &cmd) < 0)
+    return -1;
+
+  switch (cmd)
+  {
+  case 0:
+    initrwsema(&lk);
+    break;
+  case 1:
+    ret = downreadsema(&lk);
+    break;
+  case 2:
+    ret = upreadsema(&lk);
+    break;
+  case 3:
+    downwritesema(&lk);
+    break;
+  case 4:
+    upwritesema(&lk);
+    break;
+  }
+  return ret;
+}

@@ -49,3 +49,7 @@ entry("wait2");
 # assign2
 entry("setnice");
 entry("getnice");
+
+# assign3
+entry("sematest");
+entry("rwsematest");

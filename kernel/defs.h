@@ -195,5 +195,8 @@ void virtio_disk_intr(void);
 void ps(void);
 void ps2(void);
 int pageAccess(char *buf, unsigned int npages, unsigned int *btmp);
+// assign3
+int sematest(int);
+int rwsematest(int);
 
 #define NULL 0

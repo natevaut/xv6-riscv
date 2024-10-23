@@ -115,6 +115,9 @@ struct proc {
 
   // assign2
   uint8 nice;
+
+  // lab9
+  struct proc *next;
 };
 // assign2
 #define MOST_NICE 20

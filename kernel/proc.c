@@ -1018,3 +1018,9 @@ void upwritesema(struct rwsemaphore *rws)
 {
   upsema(&(rws->writesema)); // unlock write
 }
+
+int lseek(int fd, int offset)
+{
+
+  return 0;
+}

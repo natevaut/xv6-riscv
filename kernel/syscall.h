@@ -33,3 +33,4 @@
 // assign3
 #define SYS_sematest 29
 #define SYS_rwsematest 30
+#define SYS_lseek 31

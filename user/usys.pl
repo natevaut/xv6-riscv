@@ -53,3 +53,4 @@ entry("getnice");
 # assign3
 entry("sematest");
 entry("rwsematest");
+entry("lseek");

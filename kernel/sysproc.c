@@ -175,7 +175,7 @@ sys_pageAccess(void)
     uint64 va = usrpage_ptr + i * PGSIZE; // virtual addr
 
     pte_t *pte = walk(pagetable, va, 0);
-    if (pte == NULL)
+    if (!pte)
       continue; // continue if no pte
 
     // see if 'page accessed' bit is set and update into bitmap
@@ -271,4 +271,14 @@ sys_rwsematest(void)
     break;
   }
   return ret;
+}
+
+uint64
+sys_lseek(void)
+{
+  uint64 fd, offset;
+  argaddr(0, &fd);
+  argaddr(1, &offset);
+
+  return 0;
 }

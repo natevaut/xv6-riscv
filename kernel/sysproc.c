@@ -214,3 +214,31 @@ uint64 sys_setnice(void)
 
   return 0;
 }
+
+// assign3
+
+uint64 sys_sematest(void)
+{
+  static struct semaphore lk;
+  int cmd;
+
+  int ret = 0;
+
+  if (argint(0, &cmd) < 0)
+    return -1;
+
+  switch (cmd)
+  {
+  case 0:
+    initsema(&lk, 5);
+    ret = 5;
+    break;
+  case 1:
+    ret = downsema(&lk);
+    break;
+  case 2:
+    ret = upsema(&lk);
+    break;
+  }
+  return ret;
+}

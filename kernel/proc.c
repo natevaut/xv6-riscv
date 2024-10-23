@@ -948,3 +948,28 @@ int getnice(int pid)
 
   return -404;
 }
+
+// assign3
+// semaphore.c
+void initsema(struct semaphore *s, int count)
+{
+  s->value = count;
+  initlock(&s->lk, "Counting Semaphore");
+}
+int downsema(struct semaphore *s)
+{
+  acquire(&s->lk);
+  while (s->value <= 0)
+    sleep(s, &s->lk);
+  s->value--;
+  release(&s->lk);
+  return s->value;
+}
+int upsema(struct semaphore *s)
+{
+  acquire(&s->lk);
+  s->value++;
+  wakeup(s);
+  release(&s->lk);
+  return s->value;
+}

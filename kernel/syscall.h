@@ -30,3 +30,5 @@
 // assign2
 #define SYS_getnice 27
 #define SYS_setnice 28
+// assign3
+#define SYS_sematest 29

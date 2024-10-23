@@ -144,6 +144,7 @@ UPROGS=\
 	$U/_schedtest\
 	$U/_schedtest2\
 	$U/_pingpong\
+	$U/_sematest\
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)

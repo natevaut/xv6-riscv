@@ -51,3 +51,5 @@ int pageAccess(char *buf, unsigned int npages, unsigned int *btmp);
 
 int getnice(int pid);
 int setnice(int pid, int nice);
+// assign3
+int sematest(int);

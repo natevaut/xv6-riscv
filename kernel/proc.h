@@ -125,3 +125,20 @@ struct proc {
 #define DEFAULT_NICE 10
 int setnice(int pid, int n);
 int getnice(int pid);
+
+// assign3
+
+int sematest(int);
+
+// semaphore.h
+//  Generic Counting Semaphore
+struct semaphore
+{
+  int value;
+  struct spinlock lk;
+};
+
+// Prototype of the three semaphore functions in semaphore.c
+void initsema(struct semaphore *, int);
+int downsema(struct semaphore *);
+int upsema(struct semaphore *);

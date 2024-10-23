@@ -191,12 +191,11 @@ void virtio_disk_intr(void);
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))
 
-// custom:
+// assign1
 void ps(void);
 void ps2(void);
 int pageAccess(char *buf, unsigned int npages, unsigned int *btmp);
 // assign3
 int sematest(int);
 int rwsematest(int);
-
-#define NULL 0
+int lseek(int fd, int offset);

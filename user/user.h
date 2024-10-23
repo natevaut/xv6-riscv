@@ -44,13 +44,14 @@ void *memcpy(void *, const void *, uint);
 // lab7
 int wait2(int *addr, int *, int *, int *);
 
-// custom:
+// assign1
 int ps(void);
 int ps2(void);
 int pageAccess(char *buf, unsigned int npages, unsigned int *btmp);
-
+// assign2
 int getnice(int pid);
 int setnice(int pid, int nice);
 // assign3
 int sematest(int);
 int rwsematest(int);
+int lseek(int fd, int offset);

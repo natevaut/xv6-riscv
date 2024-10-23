@@ -108,6 +108,7 @@ extern uint64 sys_getnice(void);
 extern uint64 sys_setnice(void);
 extern uint64 sys_sematest(void);
 extern uint64 sys_rwsematest(void);
+extern uint64 sys_lseek(void);
 
 static uint64 (*syscalls[])(void) = {
     [SYS_fork] sys_fork,
@@ -131,7 +132,7 @@ static uint64 (*syscalls[])(void) = {
     [SYS_link] sys_link,
     [SYS_mkdir] sys_mkdir,
     [SYS_close] sys_close,
-    // custom:
+    // assign1
     [SYS_ps] sys_ps,
     [SYS_ps2] sys_ps2,
     [SYS_pageAccess] sys_pageAccess,
@@ -143,6 +144,7 @@ static uint64 (*syscalls[])(void) = {
     // assign3
     [SYS_sematest] sys_sematest,
     [SYS_rwsematest] sys_rwsematest,
+    [SYS_lseek] sys_lseek,
 };
 
 void syscall(void)

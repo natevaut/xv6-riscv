@@ -1019,11 +1019,28 @@ void upwritesema(struct rwsemaphore *rws)
   upsema(&(rws->writesema)); // unlock write
 }
 
+#include "kernel/sleeplock.h"
+#include "kernel/fs.h"
+#include "kernel/file.h"
 // fd - file descriptor
 // offset - file offset in bytes; always computed from the beginning of the file
 // returns the resulting offset location in bytes on success else -1
 int lseek(int fd, int offset)
 {
+  // open file at fd
+  struct file *pfile = myproc()->ofile[fd];
+  if (pfile == 0)
+    return -1; // -1 if file 404
 
-  return -1;
+  // get file structure inode (ptr to data)
+  struct inode *pinode = pfile->ip;
+  ilock(pinode); // lock
+  if (offset > pinode->size)
+    offset = pinode->size; // set to end if too big
+
+  iunlock(pinode); // unlock
+
+  pfile->off = offset; // set offset
+
+  return offset;
 }

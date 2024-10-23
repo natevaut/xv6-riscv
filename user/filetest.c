@@ -31,11 +31,16 @@ int main(int argc, char *argv[])
     }
 
     // check file at this new offset
-    char buffer[8];
+    char buffer[/*num preview bytes: */ 10];
     int nc = read(fd, buffer, sizeof(buffer) - 1);
-    if (nc <= 0)
+    if (nc > 0)
     {
-        printf("File error\n");
+        buffer[nc] = '\0';
+        printf("Data (%d chars) at pos %d in file %s is... '%s'\n", sizeof(buffer), offset, file, buffer);
+    }
+    else
+    {
+        printf("File error (try smaller offset?)\n");
         exit(-4);
     }
 

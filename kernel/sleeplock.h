@@ -2,7 +2,10 @@
 struct sleeplock {
   uint locked;       // Is the lock held?
   struct spinlock lk; // spinlock protecting this sleep lock
-  
+
+  // lab9
+  struct proc *head;
+
   // For debugging:
   char *name;        // Name of lock.
   int pid;           // Process holding lock

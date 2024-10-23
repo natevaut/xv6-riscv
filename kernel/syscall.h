@@ -32,3 +32,4 @@
 #define SYS_setnice 28
 // assign3
 #define SYS_sematest 29
+#define SYS_rwsematest 30

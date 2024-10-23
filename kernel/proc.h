@@ -142,3 +142,17 @@ struct semaphore
 void initsema(struct semaphore *, int);
 int downsema(struct semaphore *);
 int upsema(struct semaphore *);
+
+// Read/Write Semaphore
+struct rwsemaphore
+{
+  struct semaphore readsema;
+  struct semaphore writesema;
+  int readcount;
+};
+
+void initrwsema(struct rwsemaphore *);
+int downreadsema(struct rwsemaphore *);
+int upreadsema(struct rwsemaphore *);
+void downwritesema(struct rwsemaphore *);
+void upwritesema(struct rwsemaphore *);
